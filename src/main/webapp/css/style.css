@@ -9,7 +9,14 @@ a { text-decoration: none; color: inherit; }
 .split-layout { display: flex; height: 100vh; width: 100%; }
 .split-light { width: 50%; background: #f8fafc; display: flex; justify-content: center; align-items: center; position: relative; }
 .split-dark { width: 50%; background: linear-gradient(to bottom right, #121826, #1e293b); display: flex; justify-content: center; align-items: center; color: white; }
-.dashboard-layout { display: flex; height: 100vh; overflow: hidden; }
+
+/* --- Dashboard Layout --- */
+.dashboard-layout { 
+    display: flex; 
+    height: 100vh; 
+    overflow: hidden; 
+    background-color: #f4f7f6; 
+}
 
 /* Typography & Utilities */
 .title { font-size: 1.8rem; font-weight: bold; margin-bottom: 0.5rem; color: #1e293b; }
@@ -37,33 +44,286 @@ a { text-decoration: none; color: inherit; }
 .btn-secondary { background: #e2e8f0; color: #475569; }
 .btn-secondary:hover { background: #cbd5e1; }
 
-/* Sidebar & Dashboard */
-.sidebar { width: 260px; background: white; border-right: 1px solid #e2e8f0; display: flex; flex-direction: column; justify-content: space-between; z-index: 20; }
-.sidebar-header { padding: 1.5rem; border-bottom: 1px solid #e2e8f0; }
-.sidebar-nav { padding: 1rem; flex-grow: 1; }
-.nav-item { display: block; padding: 0.75rem 1rem; color: #64748b; border-radius: 0.5rem; margin-bottom: 0.5rem; font-weight: 500; }
-.nav-item:hover, .nav-item.active { background: #f1f5f9; color: #0f172a; }
-.sidebar-footer { padding: 1.5rem; border-top: 1px solid #e2e8f0; }
+/* --- Sidebar --- */
+.sidebar {
+    width: 280px;
+    background-color: #ffffff;
+    border-right: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column; /* Stacks items vertically */
+    padding: 24px 20px;
+    z-index: 20;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.02);
+}
 
-/* Map Area & Overlays */
-.main-content { flex-grow: 1; position: relative; display: flex; flex-direction: column; }
-#map { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 0; }
-.overlay-panel { position: absolute; top: 1.5rem; right: 1.5rem; width: 320px; background: rgba(255, 255, 255, 0.95); border-radius: 1rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); z-index: 10; display: flex; flex-direction: column; max-height: 80vh; }
-.panel-header { padding: 1rem; border-bottom: 1px solid #e2e8f0; font-weight: bold; }
-.panel-body { padding: 1rem; overflow-y: auto; }
-.report-card { background: white; padding: 0.75rem; border-radius: 0.5rem; border: 1px solid #e2e8f0; margin-bottom: 0.75rem; display: flex; gap: 0.75rem; align-items: center; }
+.sidebar-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 32px;
+}
 
-/* Admin Table */
-.admin-content { padding: 2rem; overflow-y: auto; flex-grow: 1; z-index: 1; }
-.data-table { width: 100%; border-collapse: collapse; background: white; border-radius: 0.5rem; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-.data-table th, .data-table td { padding: 1rem; text-align: left; border-bottom: 1px solid #e2e8f0; }
-.data-table th { background: #f8fafc; font-size: 0.75rem; text-transform: uppercase; color: #64748b; }
+.sidebar-profile .brand-logo {
+    height: 72px;
+    width: 72px;
+    border-radius: 50%;
+    object-fit: contain;
+    background-color: #f3ece6;
+    border: 2px solid #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    margin-bottom: 12px;
+}
 
-/* Modals */
-.modal-backdrop { top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); display: flex; justify-content: center; align-items: center; z-index: 50; }
-.modal-content { background: white; width: 500px; border-radius: 1rem; padding: 2rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
-.hidden { display: none !important; }
+.sidebar-profile .title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #111827;
+    margin-bottom: 4px;
+}
 
+.sidebar-profile .subtitle {
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+.sidebar-header { 
+    padding: 24px; 
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05); 
+}
+
+/* Sidebar Navigation */
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 32px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: #4b5563;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.nav-item:hover { background: #f3f4f6; color: #111827; }
+.nav-item.active { background: #eef2eb; color: #5b6e54; }
+
+/* Sidebar Footer (Pushed to bottom) */
+.sidebar-footer {
+    margin-top: auto; /* This magically pushes the logout button to the very bottom! */
+    padding-top: 16px;
+}
+
+.btn-logout {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    text-align: center;
+    background: #f3f4f6;
+    color: #4b5563;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+.btn-logout:hover { background: #e5e7eb; color: #111827; }
+
+/* --- Main Content & Map --- */
+.main-content {
+    flex: 1; /* Takes up all remaining width */
+    position: relative; /* Required for map to stretch inside */
+    height: 100vh;
+}
+
+#map {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%; /* Explicit height fixes the missing map issue */
+    z-index: 1;
+}
+
+/* Map Overlay Panel */
+.map-overlay {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 340px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    z-index: 9999; /* Boosted past Leaflet's max z-index */
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 48px);
+}
+
+/* --- Overlay Panel --- */
+
+.overlay-header { padding: 16px 20px; border-bottom: 1px solid #e5e7eb; font-weight: 700; color: #111827; }
+.overlay-body { padding: 16px; overflow-y: auto; }
+
+.overlay-panel { 
+    position: absolute; 
+    top: 24px; 
+    right: 24px; 
+    width: 340px; 
+    background: rgba(255, 255, 255, 0.95); 
+    backdrop-filter: blur(10px);
+    border-radius: 16px; 
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); 
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    z-index: 10; 
+    display: flex; 
+    flex-direction: column; 
+    max-height: 80vh; 
+}
+
+.panel-header { 
+    padding: 16px 20px; 
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05); 
+    font-weight: 700; 
+    color: #111827;
+}
+
+.panel-body { 
+    padding: 16px; 
+    overflow-y: auto; 
+}
+
+.report-card {
+    background: #ffffff;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.report-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* Sidebar Reporting Buttons */
+.report-section-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    padding-left: 4px;
+}
+
+.btn-report {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    border: 1px solid transparent;
+}
+
+.btn-carcass { border-color: #e5e7eb; color: #4b5563; background: #f9fafb; }
+.btn-carcass:hover { background: #f3f4f6; transform: translateY(-2px); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+
+.btn-injured { border-color: #fca5a5; color: #dc2626; background: #fff5f5; }
+.btn-injured:hover { background: #fee2e2; transform: translateY(-2px); box-shadow: 0 2px 4px rgba(220,38,38,0.1); }
+
+.btn-wild { border-color: #fde68a; color: #d97706; background: #fffbeb; }
+.btn-wild:hover { background: #fef3c7; transform: translateY(-2px); box-shadow: 0 2px 4px rgba(217,119,6,0.1); }
+
+/* --- Modals & Themes --- */
+.modal-backdrop {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(17, 24, 39, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999; /* Boosted to always be the topmost element */
+}
+
+.modal-content {
+    background: #ffffff;
+    width: 100%;
+    max-width: 480px;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    transition: border-color 0.3s ease;
+}
+
+.modal-actions { display: flex; gap: 16px; margin-top: 24px; }
+.modal-submit-btn { padding: 12px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; flex: 1; transition: background 0.2s; }
+.btn-cancel { padding: 12px; border: 1px solid #e5e7eb; background: white; color: #4b5563; border-radius: 8px; font-weight: 600; cursor: pointer; width: 100px; }
+
+/* Thematic Overrides */
+.theme-carcass { border-top: 8px solid #9ca3af; }
+.theme-carcass .modal-submit-btn { background-color: #4b5563; color: white; }
+.theme-carcass .modal-submit-btn:hover { background-color: #374151; }
+
+.theme-injured { border-top: 8px solid #dc2626; }
+.theme-injured .modal-submit-btn { background-color: #dc2626; color: white; }
+.theme-injured .modal-submit-btn:hover { background-color: #b91c1c; }
+
+.theme-wild { border-top: 8px solid #d97706; }
+.theme-wild .modal-submit-btn { background-color: #d97706; color: white; }
+.theme-wild .modal-submit-btn:hover { background-color: #b45309; }
+
+/* --- Utility Classes --- */
+.hidden { 
+    display: none !important; 
+}
+
+/* --- Dashboard Layout --- */
+.dashboard-wrapper {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background-color: #f4f7f6;
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* css for logo */
+.brand-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.brand-header .title {
+    margin-bottom: 0; /* Overrides the default title margin when next to a logo */
+}
+
+.brand-logo {
+    height: 90px;      /* Much larger height */
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+}
 
 /* Centered Auth Layouts */
 .auth-wrapper { display: flex; justify-content: center; align-items: center; height: 100vh; width: 100%; background-color: #f8fafc; }
@@ -78,3 +338,261 @@ a { text-decoration: none; color: inherit; }
 .portal-links a:hover { color: #1e293b; text-decoration: underline; }
 .portal-links-dark { color: #94a3b8; }
 .portal-links-dark a:hover { color: #f8fafc; }
+
+/* --- Advanced Auth Layouts --- */
+.auth-wrapper {
+    position: relative; /* Added to keep the video contained */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden; /* Prevents scrollbars if the video is too big */
+}
+
+.auth-card {
+    position: relative; /* Added to bring it above the video and overlay */
+    z-index: 2;         /* Sits on top of the overlay */
+    background: #ffffff;
+    width: 100%;
+    max-width: 440px; 
+    padding: 48px 40px;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 20px 40px -10px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow for video background */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* The actual video element */
+.video-background {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    object-fit: cover; /* Ensures the video fills the screen without stretching */
+}
+
+/* A dark tint over the video so the white card stands out */
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(17, 24, 39, 0.4); /* 40% opaque dark blue/grey */
+    z-index: 1;
+}
+
+/* --- Brand Header (Updated for Vertical Stack) --- */
+.brand-header {
+    display: flex;
+    flex-direction: column; /* Stacks the logo and title vertically */
+    align-items: center;    /* Centers everything horizontally */
+    gap: 16px;              /* Space between logo and title */
+    margin-bottom: 8px;
+}
+
+.brand-logo {
+    height: 96px;       /* Made the logo significantly larger (was 64px) */
+    width: 96px;        /* Must match height for a perfect circle */
+    border-radius: 50%;
+    object-fit: contain; /* Changed to 'contain' so the paw print doesn't get cut off */
+    background-color: #f3ece6; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Slightly deeper shadow for the larger size */
+    border: 3px solid #ffffff; /* Thicker white border to match the larger scale */
+}
+
+.title {
+    font-size: 1.85rem; /* Made the title slightly larger to balance the bigger logo */
+    font-weight: 800;
+    color: #111827;
+    letter-spacing: -0.5px; 
+    margin: 0;
+    text-align: center; /* Enforces absolute center alignment */
+}
+
+.subtitle {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin-bottom: 32px;
+    line-height: 1.5;
+    text-align: center; /* Keeps the subtitle centered under the title */
+}
+
+/* --- Form Elements --- */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #4b5563;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #1f2937;
+    transition: all 0.2s ease;
+    outline: none;
+    background-color: #ffffff;
+}
+
+/* Modern Focus State: Ring instead of just border */
+.form-control:focus {
+    border-color: #5b6e54;
+    box-shadow: 0 0 0 4px rgba(91, 110, 84, 0.15); 
+}
+
+/* --- Buttons --- */
+.btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: center;
+    display: block;
+}
+
+.btn-primary {
+    background-color: #5b6e54;
+    color: #ffffff;
+    margin-top: 12px;
+    box-shadow: 0 2px 4px rgba(91, 110, 84, 0.2);
+}
+
+/* Interactive hover lift */
+.btn-primary:hover {
+    background-color: #4a5a44;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(91, 110, 84, 0.3);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background-color: #f3f4f6;
+    color: #374151;
+    margin-top: 16px;
+}
+
+.btn-secondary:hover {
+    background-color: #e5e7eb;
+    color: #111827;
+}
+
+/* --- Portal Links --- */
+.portal-links {
+    margin-top: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.8rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.portal-links a {
+    color: #6b7280;
+    transition: color 0.2s;
+}
+
+.portal-links a:hover {
+    color: #111827;
+}
+
+.portal-divider {
+    color: #d1d5db;
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+/* --- Sidebar Reporting Section --- */
+.sidebar-report-section {
+    padding: 16px 24px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.report-heading {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+}
+
+.btn-report {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1.5px solid transparent;
+}
+
+/* Sidebar Report Buttons Themes */
+.btn-carcass { border-color: #e5e7eb; color: #4b5563; background: #f9fafb; }
+.btn-carcass:hover { background: #f3f4f6; transform: translateY(-1px); }
+
+.btn-injured { border-color: #fca5a5; color: #dc2626; background: #fff5f5; }
+.btn-injured:hover { background: #fee2e2; transform: translateY(-1px); }
+
+.btn-wild { border-color: #fde68a; color: #d97706; background: #fffbeb; }
+.btn-wild:hover { background: #fef3c7; transform: translateY(-1px); }
+
+/* --- Dynamic Modal Themes --- */
+/* Base adjustments */
+.modal-content { transition: background-color 0.3s ease, border-color 0.3s ease; }
+.modal-submit-btn { 
+    padding: 12px 24px; 
+    border: none; 
+    border-radius: 8px; 
+    font-weight: 600; 
+    cursor: pointer; 
+    transition: background-color 0.2s; 
+}
+
+/* 1. Carcass (White/Mourning Theme) */
+.theme-carcass { border-top: 8px solid #9ca3af; background-color: #ffffff; }
+.theme-carcass .modal-submit-btn { background-color: #4b5563; color: white; }
+.theme-carcass .modal-submit-btn:hover { background-color: #374151; }
+.theme-carcass .title { color: #111827; }
+
+/* 2. Injured (Red/Danger Theme) */
+.theme-injured { border-top: 8px solid #dc2626; background-color: #fffafa; }
+.theme-injured .modal-submit-btn { background-color: #dc2626; color: white; }
+.theme-injured .modal-submit-btn:hover { background-color: #b91c1c; }
+.theme-injured .title { color: #991b1b; }
+
+/* 3. Wild (Yellow/Careful Theme) */
+.theme-wild { border-top: 8px solid #d97706; background-color: #fffdf5; }
+.theme-wild .modal-submit-btn { background-color: #d97706; color: white; }
+.theme-wild .modal-submit-btn:hover { background-color: #b45309; }
+.theme-wild .title { color: #b45309; }

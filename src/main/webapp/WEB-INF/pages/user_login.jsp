@@ -8,14 +8,24 @@
 </head>
 <body>
     <div class="auth-wrapper">
+        
+        <video autoplay loop muted playsinline preload="auto" class="video-background" id="bg-video">
+    	<source src="${pageContext.request.contextPath}/videos/animal_video.mp4" type="video/mp4">
+		</video>
+        
+        <div class="video-overlay"></div>
+
         <div class="auth-card">
-            <h1 class="title">🌲 Voiceless</h1>
+            
+            <div class="brand-header">
+                <img src="${pageContext.request.contextPath}/images/voiceless_logo.png" alt="Voiceless Logo" class="brand-logo">
+            </div>
             <p class="subtitle">Enter your sanctuary to report sightings.</p>
             
             <% if("true".equals(request.getParameter("error"))) { %>
-                <p class="text-danger">Invalid email or password.</p>
+                <p class="text-danger" style="margin-top: -16px; margin-bottom: 20px;">Invalid email or password.</p>
             <% } else if("sys".equals(request.getParameter("error"))) { %>
-                <p class="text-danger">System error. Please try again later.</p>
+                <p class="text-danger" style="margin-top: -16px; margin-bottom: 20px;">System error. Please try again later.</p>
             <% } %>
 
             <form action="${pageContext.request.contextPath}/login" method="POST">
@@ -27,18 +37,20 @@
                     <label>Password</label>
                     <input type="password" name="password" class="form-control" placeholder="••••••••" required>
                 </div>
+                
                 <button type="submit" class="btn btn-primary">Sign In</button>
             </form>
             
-            <div style="margin-top: 1rem;">
-                <a href="${pageContext.request.contextPath}/register" class="btn btn-secondary">Create New Account</a>
-            </div>
+            <a href="${pageContext.request.contextPath}/register" class="btn btn-secondary">Create New Account</a>
 
             <div class="portal-links">
-                <a href="${pageContext.request.contextPath}/staff/login">Staff Portal</a> • 
-                <a href="${pageContext.request.contextPath}/admin/login">Admin Terminal</a>
+                <a href="${pageContext.request.contextPath}/staff/login" style="color: #e5e7eb;">Staff Portal</a> 
+                <span class="portal-divider" style="color: #9ca3af;">•</span> 
+                <a href="${pageContext.request.contextPath}/admin/login" style="color: #e5e7eb;">Admin Terminal</a>
             </div>
+            
         </div>
     </div>
+    
 </body>
 </html>
