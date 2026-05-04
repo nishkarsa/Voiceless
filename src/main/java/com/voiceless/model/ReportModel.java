@@ -8,9 +8,14 @@ public class ReportModel {
     private String category; 
     private double latitude;
     private double longitude;
+    private String locationDesc;
     private String description;
     private String status; 
     private Date reportDate;
+    private int assignedStaffId;
+    private String reporterName;
+    private String photoPath;
+
 	public int getId() {
 		return id;
 	}
@@ -47,6 +52,12 @@ public class ReportModel {
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
+	public String getLocationDesc() {
+		return locationDesc;
+	}
+	public void setLocationDesc(String locationDesc) {
+		this.locationDesc = locationDesc;
+	}
 	public String getDescription() {
 		return description;
 	}
@@ -65,6 +76,22 @@ public class ReportModel {
 	public void setReportDate(Date reportDate) {
 		this.reportDate = reportDate;
 	}
-
-    // Getters and Setters...
+	public int getAssignedStaffId() {
+		return assignedStaffId;
+	}
+	public void setAssignedStaffId(int assignedStaffId) {
+		this.assignedStaffId = assignedStaffId;
+	}
+	public String getReporterName() {
+		return reporterName;
+	}
+	public void setReporterName(String reporterName) {
+		this.reporterName = reporterName;
+	}
+	public String getPhotoPath() {
+		return photoPath;
+	}
+	public void setPhotoPath(String photoPath) {
+		this.photoPath = photoPath;
+	}
 }

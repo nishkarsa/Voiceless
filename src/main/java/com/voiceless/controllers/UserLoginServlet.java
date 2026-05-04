@@ -27,7 +27,7 @@ public class UserLoginServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         try (Connection conn = DBConfig.getConnection()) {
-            String sql = "SELECT id, name FROM users WHERE email = ? AND password = ? AND role = 'USER'";
+            String sql = "SELECT id, name, profile_image FROM users WHERE email = ? AND password = ? AND role = 'USER'";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, email);
             stmt.setString(2, password); 
@@ -37,6 +37,7 @@ public class UserLoginServlet extends HttpServlet {
                 session.setAttribute("userId", rs.getInt("id"));
                 session.setAttribute("userName", rs.getString("name"));
                 session.setAttribute("userRole", "USER");
+                session.setAttribute("userProfileImage", rs.getString("profile_image"));
                 response.sendRedirect(request.getContextPath() + "/user/dashboard");
             } else {
                 response.sendRedirect(request.getContextPath() + "/login?error=true");

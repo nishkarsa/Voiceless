@@ -9,6 +9,9 @@
 <body>
     <div class="auth-wrapper">
         <div class="auth-card">
+            <div class="brand-header">
+                <img src="${pageContext.request.contextPath}/images/voiceless_logo.png" alt="Voiceless Logo" class="brand-logo">
+            </div>
             <h1 class="title">Join Voiceless</h1>
             <p class="subtitle">Become a digital guardian for wildlife.</p>
             
@@ -16,7 +19,7 @@
                 String error = request.getParameter("error");
                 if ("duplicate".equals(error)) { 
             %>
-                <p class="text-danger">Registration failed: That email is already registered. Please log in.</p>
+                <p class="text-danger">That email is already registered. Please log in.</p>
             <% 
                 } else if ("sys".equals(error)) { 
             %>
@@ -25,10 +28,21 @@
                 } 
             %>
 
-            <form action="${pageContext.request.contextPath}/register" method="POST">
+            <form action="${pageContext.request.contextPath}/register" method="POST" enctype="multipart/form-data">
+                
+                <div class="form-group" style="text-align: center;">
+                    <label style="text-align: center;">Profile Photo</label>
+                    <div class="profile-upload-circle" id="profileUploadCircle">
+                        <i data-lucide="camera" id="profileCameraIcon"></i>
+                        <input type="file" name="profileImage" accept="image/*" onchange="previewProfile(this)">
+                        <img id="profilePreview" alt="Preview" style="display:none;">
+                    </div>
+                    <p style="font-size: 0.78rem; color: #6b7260;">Click to upload your photo</p>
+                </div>
+
                 <div class="form-group">
                     <label>Full Name</label>
-                    <input type="text" name="name" class="form-control" required>
+                    <input type="text" name="name" class="form-control" placeholder="Your full name" required>
                 </div>
                 <div class="form-group">
                     <label>Email</label>
@@ -36,15 +50,32 @@
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+                    <input type="password" name="password" class="form-control" placeholder="Create a strong password" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Register</button>
+                <button type="submit" class="btn btn-primary">Create Account</button>
             </form>
             
             <div class="portal-links">
-                <a href="${pageContext.request.contextPath}/login">&larr; Back to User Login</a>
+                <a href="${pageContext.request.contextPath}/login">&larr; Back to Login</a>
             </div>
         </div>
     </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+    lucide.createIcons();
+    function previewProfile(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var preview = document.getElementById('profilePreview');
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                document.getElementById('profileCameraIcon').style.display = 'none';
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    </script>
 </body>
 </html>

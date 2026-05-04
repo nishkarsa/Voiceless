@@ -27,8 +27,8 @@ public class StaffTaskServlet extends HttpServlet {
         String reportIdStr = request.getParameter("reportId");
 
         try (Connection conn = DBConfig.getConnection()) {
-            // Update the report status to 'REMOVED' in the database
-            String sql = "UPDATE reports SET status = 'REMOVED' WHERE id = ?";
+            // Update the report status to 'RESOLVED' in the database
+            String sql = "UPDATE reports SET status = 'RESOLVED' WHERE id = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, Integer.parseInt(reportIdStr));
             stmt.executeUpdate();

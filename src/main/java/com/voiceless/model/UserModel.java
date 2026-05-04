@@ -5,6 +5,7 @@ public abstract class UserModel {
     protected String name;
     protected String email;
     protected String role; // "USER" or "STAFF"
+    protected String profileImage;
 
     public UserModel() {}
 
@@ -27,4 +28,7 @@ public abstract class UserModel {
 
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
+
+    public String getProfileImage() { return profileImage; }
+    public void setProfileImage(String profileImage) { this.profileImage = profileImage; }
 }

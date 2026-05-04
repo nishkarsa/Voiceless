@@ -7,13 +7,16 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body>
-    <div class="auth-wrapper" style="background-color: #e2e8f0;">
-        <div class="auth-card" style="border-top: 4px solid #ca8a04;">
-            <h1 class="title">Voiceless Field Staff</h1>
-            <p class="subtitle">Access removal tasks and dispatch info.</p>
+    <div class="auth-wrapper" style="background: #edeae3;">
+        <div class="auth-card" style="border-top: 5px solid #d4a647;">
+            <div class="brand-header">
+                <img src="${pageContext.request.contextPath}/images/voiceless_logo.png" alt="Voiceless Logo" class="brand-logo">
+            </div>
+            <h1 class="title">Field Staff Portal</h1>
+            <p class="subtitle">Access dispatch tasks and incident management.</p>
             
             <% if("true".equals(request.getParameter("error"))) { %>
-                <p class="text-danger">Unauthorized Staff credentials.</p>
+                <p class="text-danger">Unauthorized staff credentials.</p>
             <% } %>
 
             <form action="${pageContext.request.contextPath}/staff/login" method="POST">
@@ -23,9 +26,9 @@
                 </div>
                 <div class="form-group">
                     <label>Staff Password</label>
-                    <input type="password" name="staffPassword" class="form-control" placeholder="••••••••" required>
+                    <input type="password" name="staffPassword" class="form-control" placeholder="Enter your password" required>
                 </div>
-                <button type="submit" class="btn btn-primary" style="background-color: #ca8a04;">Authorize Dispatch &rarr;</button>
+                <button type="submit" class="btn btn-primary" style="background: linear-gradient(135deg, #b8930e, #d4a647);">Authorize Dispatch</button>
             </form>
 
             <div class="portal-links">
