@@ -32,3 +32,20 @@ CREATE TABLE IF NOT EXISTS deletion_history (
     deleted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     reason VARCHAR(255)
 );
+
+-- 6. No schema change needed for new status values (REQUESTED, COMPLETED, FORCE_ASSIGNED).
+--    The reports.status column is VARCHAR(20) which supports the full workflow:
+--    PENDING -> REQUESTED -> ASSIGNED -> COMPLETED -> RESOLVED
+--    PENDING -> FORCE_ASSIGNED -> ASSIGNED (staff accepts) or PENDING (staff denies)
+
+-- 7. Create support_messages table
+CREATE TABLE IF NOT EXISTS support_messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    user_name VARCHAR(100),
+    user_email VARCHAR(100),
+    subject VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);

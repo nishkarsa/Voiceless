@@ -7,13 +7,20 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body>
-    <div class="auth-wrapper" style="background: #edeae3;">
-        <div class="auth-card" style="border-top: 5px solid #d4a647;">
+    <div class="auth-wrapper">
+    
+    <video autoplay loop muted playsinline preload="auto" class="video-background" id="bg-video">
+    	    <source src="${pageContext.request.contextPath}/videos/blue.mp4" type="video/mp4">
+	    </video>
+        
+        <div class="video-overlay"></div>
+    
+        <div class="auth-card">
             <div class="brand-header">
                 <img src="${pageContext.request.contextPath}/images/voiceless_logo.png" alt="Voiceless Logo" class="brand-logo">
             </div>
-            <h1 class="title">Field Staff Portal</h1>
-            <p class="subtitle">Access dispatch tasks and incident management.</p>
+            <h1 class="title">Staff Portal</h1>
+            <p class="subtitle">Access tasks and incident management.</p>
             
             <% if("true".equals(request.getParameter("error"))) { %>
                 <p class="text-danger">Unauthorized staff credentials.</p>
@@ -28,12 +35,16 @@
                     <label>Staff Password</label>
                     <input type="password" name="staffPassword" class="form-control" placeholder="Enter your password" required>
                 </div>
-                <button type="submit" class="btn btn-primary" style="background: linear-gradient(135deg, #b8930e, #d4a647);">Authorize Dispatch</button>
+                <button type="submit" class="btn btn-primary">Login</button>
             </form>
 
             <div class="portal-links">
-                <a href="${pageContext.request.contextPath}/login">&larr; Public User Login</a>
+                <a href="${pageContext.request.contextPath}/login">&larr; User Login</a>
             </div>
+            
+            <img src="${pageContext.request.contextPath}/images/rescue_team.png" alt="Rescue Team" class="auth-animal-photo">
+            
+            <a href="${pageContext.request.contextPath}/" class="home-link">&larr; Back to Home</a>
         </div>
     </div>
 </body>

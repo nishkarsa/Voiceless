@@ -83,6 +83,28 @@ public class UserDao {
         return false;
     }
 
+    // Get all staff users (for admin force-assign dropdown)
+    public List<GenericUserModel> getStaffUsers() {
+        List<GenericUserModel> staff = new ArrayList<>();
+        String sql = "SELECT * FROM users WHERE role = 'STAFF' ORDER BY name ASC";
+        try (Connection conn = DBConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                GenericUserModel u = new GenericUserModel();
+                u.setId(rs.getInt("id"));
+                u.setName(rs.getString("name"));
+                u.setEmail(rs.getString("email"));
+                u.setRole(rs.getString("role"));
+                u.setProfileImage(rs.getString("profile_image"));
+                staff.add(u);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return staff;
+    }
+
     // Count users by role
     public int countByRole(String role) {
         String sql = "SELECT COUNT(*) FROM users WHERE role = ?";

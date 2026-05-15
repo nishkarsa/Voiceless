@@ -11,11 +11,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/admin/application/action")
-public class AdminApplicationActionServlet extends HttpServlet {
+public class AdminApplicationActionServlet extends HttpServlet 
+{
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getSession().getAttribute("adminLoggedIn") == null) {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+    {
+        if (request.getSession().getAttribute("adminLoggedIn") == null) 
+        {
             response.sendRedirect(request.getContextPath() + "/admin/login");
             return;
         }
@@ -26,7 +29,8 @@ public class AdminApplicationActionServlet extends HttpServlet {
 
         StaffApplicationDao appDao = new StaffApplicationDao();
 
-        if ("approve".equals(action)) {
+        if ("approve".equals(action)) 
+        {
             // Get the application to find the user and requested role
             StaffApplicationModel app = appDao.getApplicationById(appId);
             if (app != null) {
@@ -36,10 +40,15 @@ public class AdminApplicationActionServlet extends HttpServlet {
                 UserDao userDao = new UserDao();
                 userDao.updateUserRole(app.getUserId(), app.getRequestedRole());
             }
-        } else if ("reject".equals(action)) {
+        } else if ("reject".equals(action)) 
+        {
             appDao.updateApplicationStatus(appId, "REJECTED");
         }
 
         response.sendRedirect(request.getContextPath() + "/admin/dashboard");
     }
 }
+
+
+
+

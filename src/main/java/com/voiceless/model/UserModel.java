@@ -32,3 +32,6 @@ public abstract class UserModel {
     public String getProfileImage() { return profileImage; }
     public void setProfileImage(String profileImage) { this.profileImage = profileImage; }
 }
+
+
+

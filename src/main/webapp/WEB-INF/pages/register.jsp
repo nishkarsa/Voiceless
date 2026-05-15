@@ -8,6 +8,13 @@
 </head>
 <body>
     <div class="auth-wrapper">
+    
+    <video autoplay loop muted playsinline preload="auto" class="video-background" id="bg-video">
+    	    <source src="${pageContext.request.contextPath}/videos/blue.mp4" type="video/mp4">
+	    </video>
+        
+        <div class="video-overlay"></div>
+    
         <div class="auth-card">
             <div class="brand-header">
                 <img src="${pageContext.request.contextPath}/images/voiceless_logo.png" alt="Voiceless Logo" class="brand-logo">
@@ -37,7 +44,7 @@
                         <input type="file" name="profileImage" accept="image/*" onchange="previewProfile(this)">
                         <img id="profilePreview" alt="Preview" style="display:none;">
                     </div>
-                    <p style="font-size: 0.78rem; color: #6b7260;">Click to upload your photo</p>
+                    <p style="font-size: 0.78rem; color: var(--color-text-muted);">Click to upload your photo</p>
                 </div>
 
                 <div class="form-group">
@@ -58,6 +65,10 @@
             <div class="portal-links">
                 <a href="${pageContext.request.contextPath}/login">&larr; Back to Login</a>
             </div>
+            
+            <img src="${pageContext.request.contextPath}/images/elephant_herd.png" alt="Elephants" class="auth-animal-photo">
+            
+            <a href="${pageContext.request.contextPath}/" class="home-link">&larr; Back to Home</a>
         </div>
     </div>
 

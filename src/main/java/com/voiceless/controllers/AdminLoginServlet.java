@@ -23,7 +23,7 @@ public class AdminLoginServlet extends HttpServlet {
         HttpSession session = request.getSession();
         
         // Hardcoded Admin Credentials
-        if ("ID_0000_X".equals(adminId) && "admin123".equals(token)) {
+        if ("admin".equals(adminId) && "admin".equals(token)) {
             session.setAttribute("userRole", "ADMIN");
             session.setAttribute("userName", "Super Admin");
             session.setAttribute("adminLoggedIn", true);

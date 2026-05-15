@@ -8,11 +8,21 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * StaffApplicationDao manages the workflow for users applying for staff roles.
+ * It handles application submission, retrieval for admin review, and status updates.
+ */
 public class StaffApplicationDao {
 
-    // Submit a new application
+    /**
+     * Submits a new application for a staff role.
+     * Checks for existing pending applications to prevent duplicates.
+     * @param userId The ID of the applying user
+     * @param requestedRole The role they are applying for (STAFF/HELPER)
+     * @return true if submission succeeded, false if duplicate or error
+     */
     public boolean submitApplication(int userId, String requestedRole) {
-        // Check if user already has a pending application
+        // Check if user already has a pending application to prevent spam
         String checkSql = "SELECT id FROM staff_applications WHERE user_id = ? AND status = 'PENDING'";
         String insertSql = "INSERT INTO staff_applications (user_id, requested_role) VALUES (?, ?)";
 
@@ -24,6 +34,7 @@ public class StaffApplicationDao {
                 return false; // Already has a pending application
             }
 
+            // Perform the insertion
             PreparedStatement insertStmt = conn.prepareStatement(insertSql);
             insertStmt.setInt(1, userId);
             insertStmt.setString(2, requestedRole);
@@ -34,7 +45,10 @@ public class StaffApplicationDao {
         return false;
     }
 
-    // Get all applications (for admin review), joined with user info
+    /**
+     * Retrieves all applications joined with user data for admin review.
+     * @return List of all staff applications
+     */
     public List<StaffApplicationModel> getAllApplications() {
         List<StaffApplicationModel> apps = new ArrayList<>();
         String sql = "SELECT sa.*, u.name AS user_name, u.email AS user_email FROM staff_applications sa JOIN users u ON sa.user_id = u.id ORDER BY sa.applied_at DESC";
@@ -59,7 +73,9 @@ public class StaffApplicationDao {
         return apps;
     }
 
-    // Update application status (APPROVED / REJECTED)
+    /**
+     * Updates an application status (e.g., APPROVED, REJECTED).
+     */
     public boolean updateApplicationStatus(int appId, String status) {
         String sql = "UPDATE staff_applications SET status = ? WHERE id = ?";
         try (Connection conn = DBConfig.getConnection();
@@ -73,7 +89,9 @@ public class StaffApplicationDao {
         return false;
     }
 
-    // Get application by ID
+    /**
+     * Fetches a single application by its primary ID.
+     */
     public StaffApplicationModel getApplicationById(int appId) {
         String sql = "SELECT sa.*, u.name AS user_name, u.email AS user_email FROM staff_applications sa JOIN users u ON sa.user_id = u.id WHERE sa.id = ?";
         try (Connection conn = DBConfig.getConnection();
@@ -97,7 +115,9 @@ public class StaffApplicationDao {
         return null;
     }
 
-    // Count pending applications
+    /**
+     * Returns the total count of PENDING applications for admin alerts.
+     */
     public int countPending() {
         String sql = "SELECT COUNT(*) FROM staff_applications WHERE status = 'PENDING'";
         try (Connection conn = DBConfig.getConnection();

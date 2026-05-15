@@ -1,7 +1,9 @@
 package com.voiceless.controllers;
 
 import com.voiceless.dao.ReportDao;
+import com.voiceless.dao.UserDao;
 import com.voiceless.model.ReportModel;
+import com.voiceless.model.GenericUserModel;
 import java.io.IOException;
 import java.util.List;
 import jakarta.servlet.ServletException;
@@ -25,7 +27,7 @@ public class StaffDashboardServlet extends HttpServlet {
             return;
         }
 
-        // Load all reports for the visual dashboard
+        // Load all reports for the visual dashboard and "All Reports" section
         ReportDao reportDao = new ReportDao();
         List<ReportModel> allReports = reportDao.getAllReports();
         request.setAttribute("allReports", allReports);
@@ -35,6 +37,18 @@ public class StaffDashboardServlet extends HttpServlet {
         request.setAttribute("pendingCount", reportDao.countByStatus("PENDING"));
         request.setAttribute("assignedCount", reportDao.countByStatus("ASSIGNED"));
         request.setAttribute("resolvedCount", reportDao.countByStatus("RESOLVED"));
+
+        // Load tasks assigned to this specific staff member
+        int staffId = (Integer) session.getAttribute("userId");
+        List<ReportModel> myTasks = reportDao.getReportsByStaffId(staffId);
+        request.setAttribute("myTasks", myTasks);
+
+        // Load staff profile image
+        UserDao userDao = new UserDao();
+        GenericUserModel staffUser = userDao.getUserById(staffId);
+        if (staffUser != null && staffUser.getProfileImage() != null) {
+            session.setAttribute("userProfileImage", staffUser.getProfileImage());
+        }
         
         // If authorized, forward them to the secure JSP page
         request.getRequestDispatcher("/WEB-INF/pages/staff_dashboard.jsp").forward(request, response);

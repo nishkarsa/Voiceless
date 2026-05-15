@@ -30,9 +30,10 @@ public class UserDashboardServlet extends HttpServlet {
         List<ReportModel> myReports = reportDao.getReportsByUserId(userId);
         request.setAttribute("myReports", myReports);
 
-        // Load ALL reports for the heatmap data only (community overview)
+        // Load ALL reports for the heatmap and "All Reports" tab
         List<ReportModel> allReports = reportDao.getAllReports();
         request.setAttribute("allReportsForMap", allReports);
+        request.setAttribute("allReports", allReports);
 
         // Counts for personal stats
         int myTotal = myReports.size();

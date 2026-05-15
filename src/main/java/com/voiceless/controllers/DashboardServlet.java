@@ -27,3 +27,6 @@ public class DashboardServlet extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/pages/user_dashboard.jsp").forward(request, response);
     }
 }
+
+
+

@@ -17,6 +17,10 @@ public class AdminReportActionServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getSession().getAttribute("adminLoggedIn") == null) {
+            if (isAjax(request)) {
+                sendJson(response, false, "Not authenticated");
+                return;
+            }
             response.sendRedirect(request.getContextPath() + "/admin/login");
             return;
         }
@@ -25,10 +29,13 @@ public class AdminReportActionServlet extends HttpServlet {
         String reportIdStr = request.getParameter("reportId");
         int reportId = Integer.parseInt(reportIdStr);
         ReportDao reportDao = new ReportDao();
+        boolean success = false;
+        String resultMsg = "";
 
         if ("updateStatus".equals(action)) {
             String newStatus = request.getParameter("status");
-            reportDao.updateReportStatus(reportId, newStatus);
+            success = reportDao.updateReportStatus(reportId, newStatus);
+            resultMsg = newStatus;
         } else if ("delete".equals(action)) {
             // Archive to history queue before deleting
             ReportModel report = reportDao.getReportById(reportId);
@@ -51,10 +58,25 @@ public class AdminReportActionServlet extends HttpServlet {
                 historyItem.setReason(reason != null ? reason : "Admin action");
 
                 historyDao.enqueue(historyItem);
-                reportDao.deleteReport(reportId);
+                success = reportDao.deleteReport(reportId);
+                resultMsg = "DELETED";
             }
         }
 
-        response.sendRedirect(request.getContextPath() + "/admin/dashboard");
+        if (isAjax(request)) {
+            sendJson(response, success, resultMsg);
+        } else {
+            response.sendRedirect(request.getContextPath() + "/admin/dashboard");
+        }
+    }
+
+    private boolean isAjax(HttpServletRequest request) {
+        return "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
+    }
+
+    private void sendJson(HttpServletResponse response, boolean success, String message) throws IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write("{\"success\":" + success + ",\"message\":\"" + message + "\"}");
     }
 }

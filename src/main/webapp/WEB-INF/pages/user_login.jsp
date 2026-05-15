@@ -3,14 +3,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Voiceless - User Login</title>
+    <title>Voiceless - Login In</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body>
     <div class="auth-wrapper">
         
         <video autoplay loop muted playsinline preload="auto" class="video-background" id="bg-video">
-    	    <source src="${pageContext.request.contextPath}/videos/animal_video.mp4" type="video/mp4">
+    	    <source src="${pageContext.request.contextPath}/videos/Green2.mp4" type="video/mp4">
 	    </video>
         
         <div class="video-overlay"></div>
@@ -20,7 +20,8 @@
             <div class="brand-header">
                 <img src="${pageContext.request.contextPath}/images/voiceless_logo.png" alt="Voiceless Logo" class="brand-logo">
             </div>
-            <p class="subtitle">Enter your sanctuary to report sightings.</p>
+            <h1 class="title">Welcome Back</h1>
+            <p class="subtitle">Sign in to report sightings and be the voice for voiceless.</p>
             
             <% if("true".equals(request.getParameter("error"))) { %>
                 <p class="text-danger">Invalid email or password.</p>
@@ -47,10 +48,12 @@
             <a href="${pageContext.request.contextPath}/register" class="btn btn-secondary">Create New Account</a>
 
             <div class="portal-links">
-                <a href="${pageContext.request.contextPath}/staff/login">Staff Portal</a> 
-                <span class="portal-divider">&middot;</span> 
-                <a href="${pageContext.request.contextPath}/admin/login">Admin Terminal</a>
+                <a href="${pageContext.request.contextPath}/staff/login">Staff Portal</a>
             </div>
+            
+            <img src="${pageContext.request.contextPath}/images/hero_tiger.png" alt="Tiger" class="auth-animal-photo">
+            
+            <a href="${pageContext.request.contextPath}/" class="home-link">&larr; Back to Home</a>
             
         </div>
     </div>
