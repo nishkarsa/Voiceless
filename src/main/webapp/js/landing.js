@@ -17,7 +17,7 @@
     let animationId;
 
     const CONFIG = {
-        particleCount: 80,
+        particleCount: window.innerWidth < 768 ? 40 : 80,
         colors: ['#95d5b2', '#40916c', '#2d6a4f', '#74c69d', '#52b788'],
         minSize: 1.5,
         maxSize: 4,
@@ -216,6 +216,24 @@
             } else {
                 nav.classList.remove('scrolled');
             }
+        });
+    }
+
+    // ===== MOBILE NAV TOGGLE =====
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    if (navToggle && navLinks) {
+        navToggle.addEventListener('click', () => {
+            const open = navLinks.classList.toggle('open');
+            navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+            navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        });
+        navLinks.querySelectorAll('a').forEach((link) => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+                navToggle.setAttribute('aria-expanded', 'false');
+                navToggle.setAttribute('aria-label', 'Open menu');
+            });
         });
     }
 

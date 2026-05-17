@@ -14,18 +14,20 @@ import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/staff/login")
 public class StaffLoginServlet extends HttpServlet {
-    
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         request.getRequestDispatcher("/WEB-INF/pages/staff_login.jsp").forward(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         String staffEmail = request.getParameter("staffEmail");
         String staffPassword = request.getParameter("staffPassword");
         HttpSession session = request.getSession();
-        
+
         // Authenticate against the database - look for users with STAFF role
         try (Connection conn = DBConfig.getConnection()) {
             String sql = "SELECT id, name FROM users WHERE email = ? AND password = ? AND role = 'STAFF'";

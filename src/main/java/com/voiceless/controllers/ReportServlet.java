@@ -20,15 +20,12 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 
 @WebServlet("/report/submit")
-@MultipartConfig(
-    fileSizeThreshold = 1024 * 1024,
-    maxFileSize = 10 * 1024 * 1024,
-    maxRequestSize = 15 * 1024 * 1024
-)
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 10 * 1024 * 1024, maxRequestSize = 15 * 1024 * 1024)
 public class ReportServlet extends HttpServlet {
-    
+
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("userId") == null) {
             response.sendRedirect(request.getContextPath() + "/login");
@@ -60,7 +57,8 @@ public class ReportServlet extends HttpServlet {
         if (filePart != null && filePart.getSize() > 0) {
             String uploadDir = getServletContext().getRealPath("/uploads/reports");
             File uploadFolder = new File(uploadDir);
-            if (!uploadFolder.exists()) uploadFolder.mkdirs();
+            if (!uploadFolder.exists())
+                uploadFolder.mkdirs();
 
             String originalName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
             String extension = originalName.substring(originalName.lastIndexOf("."));
@@ -84,7 +82,7 @@ public class ReportServlet extends HttpServlet {
             stmt.setDouble(7, longitude);
             stmt.setString(8, photoPath);
             stmt.executeUpdate();
-            
+
             response.sendRedirect(request.getContextPath() + "/user/dashboard?success=true");
         } catch (Exception e) {
             e.printStackTrace();

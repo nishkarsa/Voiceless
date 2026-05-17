@@ -20,20 +20,21 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 
 @WebServlet("/register")
-@MultipartConfig(
-    fileSizeThreshold = 1024 * 1024,     // 1 MB
-    maxFileSize = 5 * 1024 * 1024,       // 5 MB
-    maxRequestSize = 10 * 1024 * 1024    // 10 MB
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, // 1 MB
+        maxFileSize = 5 * 1024 * 1024, // 5 MB
+        maxRequestSize = 10 * 1024 * 1024 // 10 MB
 )
 public class RegisterServlet extends HttpServlet {
-    
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         request.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -44,7 +45,8 @@ public class RegisterServlet extends HttpServlet {
         if (filePart != null && filePart.getSize() > 0) {
             String uploadDir = getServletContext().getRealPath("/uploads/profiles");
             File uploadFolder = new File(uploadDir);
-            if (!uploadFolder.exists()) uploadFolder.mkdirs();
+            if (!uploadFolder.exists())
+                uploadFolder.mkdirs();
 
             String originalName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
             String extension = originalName.substring(originalName.lastIndexOf("."));
@@ -57,7 +59,7 @@ public class RegisterServlet extends HttpServlet {
         }
 
         try (Connection conn = DBConfig.getConnection()) {
-            
+
             // 1. Check if the email already exists in the database
             String checkSql = "SELECT id FROM users WHERE email = ?";
             PreparedStatement checkStmt = conn.prepareStatement(checkSql);
@@ -77,7 +79,7 @@ public class RegisterServlet extends HttpServlet {
             insertStmt.setString(3, password);
             insertStmt.setString(4, profileImagePath);
             insertStmt.executeUpdate();
-            
+
             response.sendRedirect(request.getContextPath() + "/login?register=success");
 
         } catch (Exception e) {

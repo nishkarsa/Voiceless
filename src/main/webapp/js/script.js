@@ -378,6 +378,53 @@ function filterReports() {
     });
 }
 
+// --- MOBILE SIDEBAR ---
+/**
+ * Toggles or closes the dashboard sidebar on small screens.
+ * @param {boolean} [forceClose] - When true, always closes the sidebar.
+ */
+function toggleSidebar(forceClose) {
+    var sidebar = document.querySelector('.sidebar');
+    if (!sidebar) return;
+    if (forceClose === true) {
+        sidebar.classList.remove('active');
+        document.body.classList.remove('sidebar-open');
+        return;
+    }
+    var isOpen = sidebar.classList.toggle('active');
+    document.body.classList.toggle('sidebar-open', isOpen);
+}
+
+function initMobileSidebar() {
+    if (!document.querySelector('.dashboard-wrapper')) return;
+
+    document.addEventListener('click', function(e) {
+        if (window.innerWidth > 900) return;
+        var sidebar = document.querySelector('.sidebar.active');
+        if (!sidebar) return;
+        if (e.target.closest('.sidebar') || e.target.closest('.mobile-menu-btn')) return;
+        toggleSidebar(true);
+    });
+
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 900) toggleSidebar(true);
+    });
+
+    document.querySelectorAll('.sidebar-nav .nav-item, .sidebar .btn-report, .sidebar .btn-logout, .sidebar .footer-nav-item').forEach(function(el) {
+        el.addEventListener('click', function() {
+            if (window.innerWidth <= 900) {
+                setTimeout(function() { toggleSidebar(true); }, 120);
+            }
+        });
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMobileSidebar);
+} else {
+    initMobileSidebar();
+}
+
 // --- PHOTO PREVIEW ---
 /**
  * Renders a local preview of the selected image before upload.

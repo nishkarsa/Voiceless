@@ -10,18 +10,20 @@ import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/admin/login")
 public class AdminLoginServlet extends HttpServlet {
-    
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         request.getRequestDispatcher("/WEB-INF/pages/admin_login.jsp").forward(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         String adminId = request.getParameter("adminId");
         String token = request.getParameter("token");
         HttpSession session = request.getSession();
-        
+
         // Hardcoded Admin Credentials
         if ("admin".equals(adminId) && "admin".equals(token)) {
             session.setAttribute("userRole", "ADMIN");

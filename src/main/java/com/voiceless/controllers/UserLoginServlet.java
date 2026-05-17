@@ -14,14 +14,16 @@ import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/login")
 public class UserLoginServlet extends HttpServlet {
-    
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         request.getRequestDispatcher("/WEB-INF/pages/user_login.jsp").forward(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         HttpSession session = request.getSession();
@@ -30,8 +32,8 @@ public class UserLoginServlet extends HttpServlet {
             String sql = "SELECT id, name, profile_image FROM users WHERE email = ? AND password = ? AND role = 'USER'";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, email);
-            stmt.setString(2, password); 
-            
+            stmt.setString(2, password);
+
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 session.setAttribute("userId", rs.getInt("id"));

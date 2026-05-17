@@ -20,7 +20,10 @@
             <img src="${pageContext.request.contextPath}/images/voiceless_logo.png" alt="Voiceless">
             Voiceless
         </a>
-        <div class="nav-links">
+        <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <div class="nav-links" id="navLinks">
             <a href="#mission">Mission</a>
             <a href="#how-it-works">How It Works</a>
             <a href="#impact">Impact</a>
